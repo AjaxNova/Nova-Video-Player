@@ -53,7 +53,6 @@ class HistoryProvider with ChangeNotifier {
     historyVideoIds = historyDB.values.toList();
     final provi = Provider.of<VideoDataModel>(context, listen: false);
     final data = getAssetsFromIds(provi.allVideosList, historyVideoIds);
-    print(data);
     historyVideosList.clear();
     historyVideosList.addAll(data);
     notifyListeners();

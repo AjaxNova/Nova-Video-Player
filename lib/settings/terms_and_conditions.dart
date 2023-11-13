@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nova_videoplayer/functions/global_variables.dart';
+
 import '../functions/text_class.dart';
 
 class TermsAndConditionScreen extends StatelessWidget {
@@ -13,11 +14,11 @@ class TermsAndConditionScreen extends StatelessWidget {
         title: Text(TextAllWidget.settingTermsAndCondition),
         backgroundColor: colorBlack,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
+      body: const Padding(
+        padding: EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
-            children: const [
+            children: [
               Text(
                 """
         

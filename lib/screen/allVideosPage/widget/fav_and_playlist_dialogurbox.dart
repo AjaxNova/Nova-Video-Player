@@ -5,9 +5,9 @@ import 'package:nova_videoplayer/provider/favoriteProvider/favorite_provider.dar
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 
-import '../../functions/gobal_functions.dart';
-import '../../functions/new_playlist_class.dart';
-import '../../functions/new_playlist_db_functions.dart';
+import '../../../functions/gobal_functions.dart';
+import '../../../functions/new_playlist_class.dart';
+import '../../../functions/new_playlist_db_functions.dart';
 
 class FavoriteMenuButton extends StatefulWidget {
   const FavoriteMenuButton(

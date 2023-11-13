@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.playlist_play),
-                  label: 'Playlists',
+                  label: 'Explore',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),

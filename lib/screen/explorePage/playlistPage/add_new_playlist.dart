@@ -312,7 +312,7 @@ Future<dynamic> deletePlaylist(
         ),
         content: const Text('Are you sure you want to delete this playlist?',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             )),
         actions: [
           TextButton(
@@ -321,7 +321,7 @@ Future<dynamic> deletePlaylist(
             },
             child: Text(
               'No',
-              style: TextStyle(color: colorWhite),
+              style: TextStyle(color: colorBlack),
             ),
           ),
           TextButton(
@@ -341,7 +341,7 @@ Future<dynamic> deletePlaylist(
                 },
               );
             },
-            child: Text('Yes', style: TextStyle(color: colorWhite)),
+            child: Text('Yes', style: TextStyle(color: colorBlack)),
           ),
         ],
       );

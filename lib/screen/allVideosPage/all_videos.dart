@@ -325,106 +325,6 @@
 //                                 favoriteVideo: startSong[index],
 //                                 indexKey: index)
 
-//                             // InkWell(
-//                             //   onTap: () {
-//                             //     print('clicked');
-//                             //        final video=startSong[index];
-//                             //        FavoriteMenuButton(
-//                             //       favoriteVideo: video,
-//                             //        indexKey: index);
-//                             //        print('object');
-//                             //       // addToFavorites(video.id);
-//                             //       // getOneAssetById(video.id);
-//                             //    },
-//                             //   child: Container(
-//                             //     margin: const EdgeInsets.only(bottom: 16),
-//                             //     child: const Icon(Icons.more_vert,color: Colors.white,)),
-//                             // )
-//                             );
-//                       },
-//                     )
-//                   : GridView.builder(
-//                       controller: _scrollController,
-//                       padding: const EdgeInsets.all(8.0),
-//                       itemCount: startSong.length,
-//                       gridDelegate:
-//                           const SliverGridDelegateWithFixedCrossAxisCount(
-//                         crossAxisCount: 2,
-//                         crossAxisSpacing: 8.0,
-//                         mainAxisSpacing: 8.0,
-//                       ),
-//                       itemBuilder: (context, index) {
-//                         return GestureDetector(
-//                           onTap: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) => VideoPLayerPage(
-//                                   videoList: startSong,
-//                                   initialIndex: index,
-//                                 ),
-//                               ),
-//                             );
-//                           },
-//                           child: GestureDetector(
-//                             onLongPress: () {
-//                               ///implement the video preview
-//                             },
-//                             child: Stack(
-//                               alignment: Alignment.center,
-//                               children: [
-//                                 FutureBuilder<Uint8List?>(
-//                                   future: startSong[index].thumbnailData,
-//                                   builder: (BuildContext context,
-//                                       AsyncSnapshot<Uint8List?> snapshot) {
-//                                     if (snapshot.connectionState ==
-//                                             ConnectionState.done &&
-//                                         snapshot.data != null) {
-//                                       return ClipRRect(
-//                                         borderRadius:
-//                                             BorderRadius.circular(8.0),
-//                                         child: SizedBox(
-//                                             height: 120,
-//                                             width: 150,
-//                                             child: Image.memory(
-//                                               snapshot.data!,
-//                                               fit: BoxFit.cover,
-//                                             )),
-//                                       );
-//                                     } else {
-//                                       return const CircularProgressIndicator(
-//                                         color: Colors.black,
-//                                       );
-//                                     }
-//                                   },
-//                                 ),
-//                                 Positioned(
-//                                   child: Container(
-//                                     margin: const EdgeInsets.only(top: 145),
-//                                     child: Text(
-//                                       startSong[index].title ?? 'Unnamed',
-//                                       maxLines: 1,
-//                                       textAlign: TextAlign.center,
-//                                       style: const TextStyle(
-//                                         color: Colors.white,
-//                                         fontWeight: FontWeight.bold,
-//                                         fontSize: 16.0,
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                     ),)
-//         ],
-//       )),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:nova_videoplayer/provider/videoDataProvider/video_data_provider.dart';
 import 'package:nova_videoplayer/screen/allVideosPage/widget/all_videos_gridview.dart';
@@ -448,13 +348,24 @@ class AllVideosPage extends StatelessWidget {
             return Column(
               children: [
                 const HeaderLogo(),
-                Expanded(
-                  child: !value.isGridView
-                      ? const ListviewAllVideos(
-                          pageType: 'all',
-                        )
-                      : const AllVideosGridView(),
-                )
+                value.allFoldersList.isEmpty
+                    ? const Expanded(
+                        child: SizedBox(
+                          child: Center(
+                            child: Text(
+                              "No videos",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: !value.isGridView
+                            ? const ListviewAllVideos(
+                                pageType: 'all',
+                              )
+                            : const AllVideosGridView(),
+                      )
               ],
             );
           },

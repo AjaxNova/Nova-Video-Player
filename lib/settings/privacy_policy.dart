@@ -15,11 +15,11 @@ class PrivacyPolicyScreen extends StatelessWidget {
         backgroundColor: colorBlack,
       ),
       backgroundColor: colorBlack,
-      body: Padding(
-        padding: const EdgeInsets.all(10),
+      body: const Padding(
+        padding: EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
-            children: const [
+            children: [
               Text(
                 """
         

@@ -32,9 +32,7 @@ class _VideoPLayerPageState extends State<VideoPLayerPage> {
     _currentIndex = widget.initialIndex;
     Provider.of<HistoryProvider>(context, listen: false)
         .addTohistory(widget.videoList[widget.initialIndex]);
-    // Provider.of<HistoryProvider>(context, listen: false).addToHistory(
-    //     id: widget.videoList[widget.initialIndex].id,
-    //     video: widget.videoList[widget.initialIndex]);
+
     _initializeVideoPlayer();
   }
 
@@ -169,102 +167,3 @@ class _VideoPLayerPageState extends State<VideoPLayerPage> {
           );
   }
 }
-
-////////////////////////////////////////////////////stable///////////////////////
-
-// import 'package:chewie/chewie.dart';
-// import 'package:flutter/material.dart';
-// import 'package:nova_videoplayer/functions/global_variables.dart';
-// import 'package:photo_manager/photo_manager.dart';
-// import 'package:video_player/video_player.dart';
-
-// class VideoPlayerWidget extends StatefulWidget {
-//   final VideoPlayerController videoPlayerController;
-//   final List<AssetEntity> videos;
-//   final int initialIndex;
-//   final double aspectRatio;
-//   final ChewieController chewieeController;
-
-//   const VideoPlayerWidget({
-//     Key? key,
-//     // required this.videoPlayerController,
-//     required this.videos,
-//     required this.initialIndex,
-//     required this.aspectRatio,
-//     required this.chewieeController,
-//     required this.videoPlayerController,
-//   }) : super(key: key);
-
-//   @override
-//   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
-// }
-
-// class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-//   late ChewieController _chewieController;
-
-//   bool _isPlaying = false;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _chewieController = widget.chewieeController;
-//   }
-
-//   @override
-//   void dispose() {
-//     widget.videoPlayerController.dispose();
-//     _chewieController.dispose();
-//     super.dispose();
-//   }
-
-//   void _playPauseVideo() {
-//     setState(() {
-//       _isPlaying = !_isPlaying;
-//       if (_isPlaying) {
-//         widget.videoPlayerController.play();
-//       } else {
-//         widget.videoPlayerController.pause();
-//       }
-//     });
-//   }
-
-//   void _skipForward() {
-//     final Duration currentPosition =
-//         widget.videoPlayerController.value.position;
-//     final Duration newDuration = currentPosition + const Duration(seconds: 5);
-//     widget.videoPlayerController.seekTo(newDuration);
-//   }
-
-//   void _skipBackward() {
-//     final Duration currentPosition =
-//         widget.videoPlayerController.value.position;
-//     final Duration newDuration = currentPosition - const Duration(seconds: 5);
-//     widget.videoPlayerController.seekTo(newDuration);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Scaffold(
-//         backgroundColor: colorBlack,
-//         body: Stack(
-//           // crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             Center(
-//               child: SizedBox(
-//                 width: widget.videos[widget.initialIndex].longitude,
-//                 height: double.infinity,
-//                 child: AspectRatio(
-//                   aspectRatio: widget.aspectRatio,
-//                   child: Chewie(
-//                     controller: _chewieController,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

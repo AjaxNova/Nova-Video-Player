@@ -65,7 +65,8 @@ class VideoSearchDelegate extends SearchDelegate<AssetEntity> {
     return IconButton(
       icon: const Icon(Icons.arrow_back),
       onPressed: () {
-        close(context, assets.first);
+        Navigator.of(context).pop();
+        // close(context, assets.first);
       },
     );
   }

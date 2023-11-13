@@ -183,6 +183,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:nova_videoplayer/functions/global_variables.dart';
 import 'package:nova_videoplayer/provider/historyprovider/history_provider.dart';
+import 'package:nova_videoplayer/provider/watchLater/watch_later_provider.dart';
 import 'package:nova_videoplayer/screen/video_player_page.dart';
 import 'package:provider/provider.dart';
 
@@ -289,18 +290,34 @@ class HistoryPage extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 12, color: Colors.blueGrey),
                         ),
-                        trailing: IconButton(
-                          onPressed: () {
-                            // provi.removeFromHistory(
-                            //     videos: temp[index], index: index);
-                            provi.removeFromHistory(
-                                video: temp[index], index: index);
-                          },
-                          icon: Icon(
-                            size: 18,
-                            Icons.remove,
-                            color: colorWhite,
-                          ),
+                        trailing: Wrap(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                final provi = Provider.of<WatchlLaterProvider>(
+                                    context,
+                                    listen: false);
+                                provi.addToWatchLater(temp[index]);
+                              },
+                              icon: Icon(
+                                Icons.watch_later,
+                                color: colorWhite,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // provi.removeFromHistory(
+                                //     videos: temp[index], index: index);
+                                provi.removeFromHistory(
+                                    video: temp[index], index: index);
+                              },
+                              icon: Icon(
+                                size: 18,
+                                Icons.remove,
+                                color: colorWhite,
+                              ),
+                            ),
+                          ],
                         )),
                   ),
                 );

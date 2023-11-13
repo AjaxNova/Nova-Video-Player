@@ -34,10 +34,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  permission_handler: ^11.0.1
   photo_manager: ^2.5.2
   provider: ^6.0.5
+  rflutter_alert: ^2.0.7
   video_player: ^2.5.2
 
 dev_dependencies:
@@ -67,7 +70,7 @@ flutter:
   assets:
     - assets/images/SplashLogo.png
     - assets/images/1024.png
-
+    - assets/images/SplashLogoSvg.svg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

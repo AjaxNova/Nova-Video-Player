@@ -4,7 +4,9 @@ import 'package:nova_videoplayer/provider/favoriteProvider/favorite_provider.dar
 import 'package:nova_videoplayer/provider/historyprovider/history_provider.dart';
 import 'package:nova_videoplayer/provider/home/home_button_provider.dart';
 import 'package:nova_videoplayer/provider/playlistDbProvider/playlist_db_provider.dart';
+import 'package:nova_videoplayer/provider/shortVideoProvider/short_video_provider.dart';
 import 'package:nova_videoplayer/provider/videoDataProvider/video_data_provider.dart';
+import 'package:nova_videoplayer/provider/watchLater/watch_later_provider.dart';
 import 'package:nova_videoplayer/screen/splashScreenPage/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +27,8 @@ main(List<String> args) async {
   await Hive.openBox<Playlist>('playlistDb');
 
   await Hive.openBox<String>('videoHistory');
+
+  await Hive.openBox<String>("watchLater");
 
   runApp(const Nova());
 }
@@ -49,6 +53,12 @@ class Nova extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HistoryProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ShortVideoProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WatchlLaterProvider(),
         )
       ],
       child: MaterialApp(

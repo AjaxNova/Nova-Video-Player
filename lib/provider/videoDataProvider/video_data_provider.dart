@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nova_videoplayer/provider/favoriteProvider/favorite_provider.dart';
 import 'package:nova_videoplayer/provider/historyprovider/history_provider.dart';
+import 'package:nova_videoplayer/provider/shortVideoProvider/short_video_provider.dart';
+import 'package:nova_videoplayer/provider/watchLater/watch_later_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -50,17 +55,33 @@ class VideoDataModel with ChangeNotifier {
   Future<void> fetchVideoList(context) async {
     final albums = await PhotoManager.getAssetPathList(type: RequestType.video);
     // final albums= await PhotoManager.getAssetPathList(type: RequestType.all);
-    final recentAlbum = albums.first;
+    if (albums.isEmpty) {
+      log("empty");
+    } else {
+      log(" data foyund");
 
-    final assetCount = await recentAlbum.assetCountAsync;
-    final recentAssets =
-        await recentAlbum.getAssetListRange(start: 0, end: assetCount - 1);
-    allFoldersList = albums;
-    allVideosList = recentAssets.toList();
-    Provider.of<FavoriteProvider>(context, listen: false)
-        .initialize(recentAssets);
-    Provider.of<HistoryProvider>(context, listen: false)
-        .intiHistor(context: context);
+      for (var i = 0; i < albums.length; i++) {
+        log(albums[i].name);
+      }
+
+      final recentAlbum = albums.first;
+
+      final assetCount = await recentAlbum.assetCountAsync;
+      final recentAssets =
+          await recentAlbum.getAssetListRange(start: 0, end: assetCount - 1);
+      allFoldersList = albums;
+      allVideosList = recentAssets.toList();
+      Provider.of<FavoriteProvider>(context, listen: false)
+          .initialize(recentAssets);
+      Provider.of<HistoryProvider>(context, listen: false)
+          .intiHistor(context: context);
+      Provider.of<ShortVideoProvider>(context, listen: false)
+          .getLandscapeVideos(allVideosList);
+
+      Provider.of<WatchlLaterProvider>(context, listen: false)
+          .initWatchLater(allVideosList);
+    }
+
     // Provider.of<HistoryProvider>(context, listen: false).initHistory();
     // dummyAssets.sort((a, b) => a.title!.compareTo(b.title!));
     // final List<AssetEntity> videoList = dummyAssets;
@@ -87,5 +108,15 @@ class VideoDataModel with ChangeNotifier {
         await folder.getAssetListRange(start: 0, end: count);
     allVideosIntheFoldersTitle = folder.name;
     notifyListeners();
+  }
+
+  checkForPermission() async {
+    if (await Permission.storage.request().isGranted) {
+      return "permission_granted";
+    } else if (await Permission.storage.request().isPermanentlyDenied) {
+      return "permanentlyDenied";
+    } else if (await Permission.storage.request().isDenied) {
+      return "no_permission";
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nova_videoplayer/provider/videoDataProvider/video_data_provider.dart';
+import 'package:nova_videoplayer/screen/video_player_page.dart';
 import 'package:provider/provider.dart';
 
 class AllVideosGridView extends StatelessWidget {
@@ -22,15 +23,15 @@ class AllVideosGridView extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => VideoPlayerPage(
-                //       videoList: value.allVideosList,
-                //       initialIndex: index,
-                //     ),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VideoPLayerPage(
+                      videoList: value.allVideosList,
+                      initialIndex: index,
+                    ),
+                  ),
+                );
               },
               child: GestureDetector(
                 onLongPress: () {

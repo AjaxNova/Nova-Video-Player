@@ -8,7 +8,7 @@ import 'package:nova_videoplayer/provider/videoDataProvider/video_data_provider.
 import 'package:nova_videoplayer/screen/video_player_page.dart';
 import 'package:provider/provider.dart';
 
-import '../../newPlaylistPage/fav_and_playlist_dialogurbox.dart';
+import 'fav_and_playlist_dialogurbox.dart';
 
 class ListviewAllVideos extends StatelessWidget {
   const ListviewAllVideos({super.key, required this.pageType});

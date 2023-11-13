@@ -1,6 +1,3 @@
-
-
-
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
@@ -8,15 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nova_videoplayer/functions/global_variables.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../functions/history.dart';
+import '../../functions/history.dart';
+import '../../provider/shortVideoProvider/short_video_provider.dart';
 
 class ShortsPageTry extends StatefulWidget {
+  const ShortsPageTry({
+    super.key,
+  });
 
-  const ShortsPageTry({super.key, required this.shortVideos});
-
-  final List<AssetEntity> shortVideos ;
+  // final List<AssetEntity> shortVideos;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -25,39 +25,39 @@ class ShortsPageTry extends StatefulWidget {
 
 class _ShortsPageTryState extends State<ShortsPageTry> {
   late PageController _pageController;
-  int _currentPageIndex = 0;
+  // int _currentPageIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: _currentPageIndex);
+    final provi =
+        Provider.of<ShortVideoProvider>(context, listen: false).pageCounter;
+    _pageController = PageController(initialPage: provi);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: colorBlack,
-      body: PageView.builder(
-        scrollDirection: Axis.vertical,
-        controller: _pageController,
-        itemCount: widget.shortVideos.length,
-        itemBuilder: (BuildContext context, int index) {
-             
-           return VideoPLayerPageForShorts(video: widget.shortVideos[index]);
-            
-        },
-        onPageChanged: (int pageIndex) {
-          setState(() {
-            
-             _currentPageIndex = pageIndex;
-          });
-        },
-      ),
+    return Consumer<ShortVideoProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: colorBlack,
+          body: PageView.builder(
+            scrollDirection: Axis.vertical,
+            controller: _pageController,
+            itemCount: value.allShortVideos.length,
+            itemBuilder: (BuildContext context, int index) {
+              return VideoPLayerPageForShorts(
+                  video: value.allShortVideos[index]);
+            },
+            onPageChanged: (int pageIndex) {
+              value.incrementPage(pageIndex);
+            },
+          ),
+        );
+      },
     );
   }
 }
-
-
 
 class VideoPLayerPageForShorts extends StatefulWidget {
   final AssetEntity video;
@@ -93,8 +93,8 @@ class _VideoPLayerPageForShortsState extends State<VideoPLayerPageForShorts>
   }
 
   void _initializeVideoPlayer() async {
-    _videoPlayerController = VideoPlayerController.file(
-        File((await widget.video.file)?.path ?? ''));
+    _videoPlayerController =
+        VideoPlayerController.file(File((await widget.video.file)?.path ?? ''));
     await _videoPlayerController.initialize();
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
@@ -103,15 +103,15 @@ class _VideoPLayerPageForShortsState extends State<VideoPLayerPageForShorts>
     );
     setState(() {
       _chewieController = ChewieController(
-         errorBuilder: (context, errorMessage) {
+          errorBuilder: (context, errorMessage) {
             return const Text('Video Error');
-         },
+          },
           showControlsOnInitialize: false,
           showControls: true,
           allowMuting: false,
           allowFullScreen: false,
           autoInitialize: true,
-          
+
           // overlay: BottomAppBar(child: Text(widget.video.title!,style: TextStyle(color: colorWhite),)),
           videoPlayerController: _videoPlayerController,
           autoPlay: true,
@@ -119,17 +119,15 @@ class _VideoPLayerPageForShortsState extends State<VideoPLayerPageForShorts>
           allowedScreenSleep: true,
           zoomAndPan: true,
           fullScreenByDefault: false);
-          loaded = true;
-          final size = MediaQuery.of(context).size;
-          isPortrait = size.height > size.width;
-          if (isPortrait) {
-          SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-          _chewieController.enterFullScreen();
-          }
-
+      loaded = true;
+      final size = MediaQuery.of(context).size;
+      isPortrait = size.height > size.width;
+      if (isPortrait) {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+        _chewieController.enterFullScreen();
+      }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +136,6 @@ class _VideoPLayerPageForShortsState extends State<VideoPLayerPageForShorts>
             backgroundColor: Colors.black,
             body: OrientationBuilder(
               builder: (context, orientation) {
-              
                 return Chewie(
                   controller: _chewieController,
                 );

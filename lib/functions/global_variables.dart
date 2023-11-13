@@ -1,18 +1,15 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:photo_manager/photo_manager.dart';
-
-import 'new_playlist_class.dart';
 
 Color colorBlack = Colors.black;
 Color colorWhite = Colors.white;
 Color colorGreen = const Color(0xFF4FEC68);
 
-List<String> allTheFavoriteVideosList = [];
+// List<String> allTheFavoriteVideosList = [];
 
-ValueNotifier<List<Playlist>> playListnotifier = ValueNotifier([]);
+// ValueNotifier<List<Playlist>> playListnotifier = ValueNotifier([]);
 // void addPlaylist(String playlistName,Playlist playlist)async {
 
 //   final playlistDB=await Hive.openBox<Playlist>('playlist_db');
@@ -39,22 +36,6 @@ List<AssetEntity> theAllVideosListFortheSelectionPage = [];
 
 List<AssetEntity> theAllShortVideos = [];
 
-Future<List<AssetEntity>> getLandscapeVideos(List<AssetEntity> videos) async {
-  final result = <AssetEntity>[];
-
-  for (final video in videos) {
-    final duration = video.videoDuration;
-    final aspectRatio = video.width / video.height;
-    if (aspectRatio > 1 &&
-        (duration < const Duration(seconds: 32)) &&
-        duration > const Duration(seconds: 4)) {
-      result.add(video);
-    }
-  }
-  result.shuffle();
-  return result;
-}
-
 // void addToPlaylist(PlayListModel value)async{
 
 //    playListnotifier.value.add(value);
@@ -62,12 +43,12 @@ Future<List<AssetEntity>> getLandscapeVideos(List<AssetEntity> videos) async {
 //     print('added');
 
 // }
-getAllPlayListFromDb() async {
-  final playlistDB = await Hive.openBox<Playlist>('playlist_db');
-  playListnotifier.value.clear();
-  playListnotifier.value.addAll(playlistDB.values);
-  playListnotifier.notifyListeners();
-}
+// getAllPlayListFromDb() async {
+//   final playlistDB = await Hive.openBox<Playlist>('playlist_db');
+//   playListnotifier.value.clear();
+//   playListnotifier.value.addAll(playlistDB.values);
+//   playListnotifier.notifyListeners();
+// }
 
 // List<AssetEntity> getAssetsFromIds(List<String> ids) {
 //   final List<AssetEntity> assets = [];
@@ -85,7 +66,6 @@ List<AssetEntity> getAssetsFromIds(
     AssetEntity? video = allVideos.firstWhere((video) => video.id == id);
     playlistVideos.add(video);
   }
-  print("videos added");
 
   return playlistVideos;
 }
